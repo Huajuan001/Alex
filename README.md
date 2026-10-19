@@ -1,36 +1,36 @@
-# CineMatch Studio · v0.3.1 实验版
+# CineMatch Studio · v0.3.2 实验版
 
-[**点击下载 Mac 安装包**](https://github.com/Huajuan001/Alex/raw/refs/tags/v0.3.1/CineMatchStudio-v0.3.1-Monterey.zip)
-
-## Monterey 12.7.6 修复
-
-v0.3.1 修正上一版将最低系统误设为 macOS 13 的问题。安装器和调色应用的最低版本均改为 12.0，安装脚本接受 12.7.6。已静态核对 270 个 Intel 依赖切片的最低系统声明，均不高于 12.0；这不等于已在 Mac 实机运行。
-
-请使用新解压的 **v0.3.1** 文件夹里的安装器。旧下载包不会自动更新；可从旧版安装状态直接备份升级。此修复针对 CineMatch 安装器，不改变 Resolve 自身的系统和硬件支持范围。
+[**点击下载 Mac 安装包（Monterey 修复版）**](https://github.com/Huajuan001/Alex/raw/refs/tags/v0.3.2/CineMatchStudio-v0.3.2-Monterey.zip)
 
 ## 使用
 
-1. 下载并解压 `CineMatchStudio-v0.3.1-Monterey.zip`。
-2. 打开“安装 CineMatch Studio.app”，等待安装完成。首次需要联网下载约 180–250 MB 的独立运行环境，无需手动配置 Python 或运行终端命令。
-3. 完全退出并重新打开 DaVinci Resolve，从“工作区 → 脚本 → CineMatch Studio”启动；也可能在 Utility 分组。
-4. 选择 sRGB 或 DWG/Intermediate 模式。包内“DWG 示例”可先用于试跑。
+1. 完整解压 ZIP，双击 **“显示安装进度.command”**。它会自动安装并显示进度，无需输入命令。也可打开“安装 CineMatch Studio.app”，它会先固定资源，再打开进度窗口。
+2. 保持进度窗口打开，等待“安装成功”或具体错误；成功后重开 Resolve。
+3. 从“工作区 → 脚本 → CineMatch Studio”启动；可能分组在 Utility。
+4. 选择 sRGB 或 DWG/Intermediate 模式。包内“DWG 示例”可先试跑。
 
-目标 macOS 12 Monterey 及以上，Intel / Apple Silicon。开发版尚未签名/公证，如系统阻止，请按 macOS 提供的“打开”或“隐私与安全性 → 仍要打开”流程处理。
+macOS 12 Monterey 及以上，Intel / Apple Silicon。开发版尚未签名/公证，首次打开如被系统阻止，使用 macOS 提供的右键“打开”选项。无需关闭安全保护。
 
-## 工作空间与限制
+## v0.3.2 安装修复
 
-- sRGB 模式：普通显示参考图片；生成 sRGB→sRGB LUT，不可直接套到 Log / DWG。
-- DWG 模式：源图须是真正编码为 DWG/Intermediate 的全范围 RGB16/浮点 TIFF；参考图为 sRGB。生成 DWG→DWG 的 33³ 调色 LUT，放在输出变换之前。编码域限 0..1。
-- 相机原生 Log 必须先正确转换到 DWG；已由工程色彩管理转换时不要重复 CST。
-- 名称含 `View` 的 LUT 是诊断显示变换，用于复现预览，不应与另一套输出显示变换叠加。预览与 Resolve DRT 不同。
-- 当前帧读取和节点加载仍为手动流程；未调用未经本机文档核验的 Resolve API。
+针对在组装应用时出现的 `AppTranslocation/.../macos/launch-app.sh` 缺失错误：先将完整安装资源复制并校验到用户 Application Support 中，再进行耗时安装。之后临时源目录消失也不再影响组装。
 
-当前为全局统计匹配原型，没有语义肤色保护、局部遮罩或跟踪。
+依赖锁文件不变，会复用原先下载的 Python 与依赖。安装过程显示下载、pip 和阶段输出；错误记录阶段与退出码。另附“查看安装诊断.command”，只生成诊断报告，不重装、删锁或停止任务。
 
-## 验证
+v0.3.1 的 macOS 12 最低版本修复保持不变。本工具的兼容范围不改变 Resolve 自身的系统/GPU要求；当前本机对接目标为 Resolve 19.1，未调用 21 专属 API。
 
-Linux CPython 3.11 下完整测试 **117 项通过**，含独立色彩数学对照、HDR/强度/输入精度、双 LUT 预览、GUI、Lua 及安装升级/回退测试。macOS 安装、Resolve 21 菜单和实际输出一致性尚待实机验证。
+## 工作空间
 
-完整源码、测试和文档在安装器包 `Contents/Resources/project` 中。界面内可点击“保存 Resolve 诊断信息”。日志在 `~/Library/Logs/CineMatchStudio/`。
+- sRGB：普通显示参考图片；sRGB→sRGB LUT，不可直接套到 Log / DWG。
+- DWG：真正编码为 DWG/Intermediate 的全范围 RGB16/浮点 TIFF；参考图为 sRGB。调色 LUT 为 DWG→DWG 33³，放在输出变换之前。编码域限 0..1。
+- 相机原生 Log 先正确转换到 DWG；已经由工程色彩管理转换时不要重复 CST。
+- `View` LUT 是诊断显示变换，用于复现预览，不与另一套输出显示变换叠加。预览与 Resolve DRT 不同。
+- 当前帧导出和节点加载仍为手动流程；全局统计原型，没有语义肤色保护、局部遮罩或跟踪。
 
-同目录的 `.sha256` 文件提供安装包校验值。
+## 验证与反馈
+
+Linux CPython 3.11 完整测试 **125 项通过**，含临时源目录删除后的组装回归、进度入口、退出码、安装升级和原有色彩/界面测试。ShellCheck 通过。真实 macOS 安装、Resolve 菜单和输出一致性仍待实机验证。
+
+完整源码和文档在安装器包 `Contents/Resources/project` 中。日志位于 `~/Library/Logs/CineMatchStudio/`。新进度窗口会显示具体错误，可提供日志末尾继续排查。
+
+同目录 `.sha256` 文件提供安装包校验值。先前下载的旧包不会自动更新，请使用本次新解压的文件夹。
