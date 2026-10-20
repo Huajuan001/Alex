@@ -1,6 +1,6 @@
-# CineMatch Studio · v0.3.2 实验版
+# CineMatch Studio · v0.4.0 实验版
 
-[**点击下载 Mac 安装包（Monterey 修复版）**](https://github.com/Huajuan001/Alex/raw/refs/tags/v0.3.2/CineMatchStudio-v0.3.2-Monterey.zip)
+[**点击下载 Mac 安装包（新版调色界面）**](https://github.com/Huajuan001/Alex/raw/refs/tags/v0.4.0/CineMatchStudio-v0.4.0-Monterey.zip)
 
 ## 使用
 
@@ -11,7 +11,15 @@
 
 macOS 12 Monterey 及以上，Intel / Apple Silicon。开发版尚未签名/公证，首次打开如被系统阻止，使用 macOS 提供的右键“打开”选项。无需关闭安全保护。
 
-## v0.3.2 安装修复
+## v0.4.0 界面更新
+
+深灰工作区、大幅画面对比、并排素材卡片和右侧参数栏。支持拖动分割线、原图/分割/结果切换、强度预设、数值与滑杆同步及重置。选图即预览，较小窗口的导出按钮保持可见。
+
+![实际 Qt 界面预览](CineMatchStudio-v0.4.0-preview.png)
+
+截图来自 Linux Qt 离屏运行；macOS 字体与窗口装饰以本机为准。匹配算法和依赖锁文件不变，升级复用已有 Python 与依赖。用户已确认上一版在 Monterey / Resolve 19.1 可用，新界面待本机查看。升级前先退出旧调色窗口，再运行新包的安装入口。
+
+## 延续 v0.3.2 安装修复
 
 针对在组装应用时出现的 `AppTranslocation/.../macos/launch-app.sh` 缺失错误：先将完整安装资源复制并校验到用户 Application Support 中，再进行耗时安装。之后临时源目录消失也不再影响组装。
 
@@ -29,7 +37,7 @@ v0.3.1 的 macOS 12 最低版本修复保持不变。本工具的兼容范围不
 
 ## 验证与反馈
 
-Linux CPython 3.11 完整测试 **125 项通过**，含临时源目录删除后的组装回归、进度入口、退出码、安装升级和原有色彩/界面测试。ShellCheck 通过。真实 macOS 安装、Resolve 菜单和输出一致性仍待实机验证。
+Linux CPython 3.11 完整测试 **128 项通过**，含临时源目录删除后的组装回归、进度入口、退出码、安装升级和原有色彩/界面测试。ShellCheck 通过。用户已确认上一版 macOS 安装启动可用；新版界面和 Resolve 输出一致性仍待实机验证。
 
 完整源码和文档在安装器包 `Contents/Resources/project` 中。日志位于 `~/Library/Logs/CineMatchStudio/`。新进度窗口会显示具体错误，可提供日志末尾继续排查。
 
